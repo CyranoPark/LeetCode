@@ -10,41 +10,42 @@ var islandPerimeter = function(grid) {
             if (grid[i][j] === 1) {
                 countEdge(i, j);
             }
+            grid[i][j] = Math.abs(grid[i][j]);
         }
     }
+
+    return count;
     
     function countEdge(i, j) {
-        count += 4;
+        grid[i][j] = -1;
         
         if (hasLandCell(i - 1, j)) {
-            // countEdge(i - 1, j);
-            count -= 1;
+            countEdge(i - 1, j);
         }
         
         if (hasLandCell(i + 1, j)) {
-            // countEdge(i + 1, j);
-            count -= 1;
+            countEdge(i + 1, j);
         }
         
         if (hasLandCell(i, j - 1)) {
-            // countEdge(i, j - 1);
-            count -= 1;
+            countEdge(i, j - 1);
         }
         
         if (hasLandCell(i, j + 1)) {
-            // countEdge(i, j + 1);
-            count -= 1;
+            countEdge(i, j + 1);
         }
     }
         
     function hasLandCell(i, j) {
         if (!grid[i] || !grid[i][j]) {
+            count += 1;
+            return false;
+        }
+        
+        if (grid[i][j] === -1) {
             return false;
         }
         
         return true;
     }
-    
-    return count;
-    
 };
